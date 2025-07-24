@@ -71,3 +71,11 @@ Long-pressing the **A** button (which, unintuitively, is on the right side) will
 - Create a centralized positioning/layout system
 - Replace all personal data with placeholders or move them into a config file
 - Fix all the commenting
+
+## 3D Printed Case
+
+- Three part (OK, 4 if you count the legs seperately... OK, 8 if you also count the buttons seperately...) 3D printed case
+- Printed in PLA with default settings - you will need supports for the back piece
+- Uses 4 x M2.5mm bolts that screw into the Inky Impression - I used some filed down standoffs to make everything a bit more rigid but it probably isn't needed
+- Uses 4 x M2 bolts and nuts to hold the front face on
+- STL files: 
