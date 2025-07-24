@@ -78,4 +78,4 @@ Long-pressing the **A** button (which, unintuitively, is on the right side) will
 - Printed in PLA with default settings - you will need supports for the back piece
 - Uses 4 x M2.5mm bolts that screw into the Inky Impression - I used some filed down standoffs to make everything a bit more rigid but it probably isn't needed
 - Uses 4 x M2 bolts and nuts to hold the front face on
-- STL files: 
+- STL files: https://www.printables.com/model/1363758-inky-impression-spectra-73-case
