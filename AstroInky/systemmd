@@ -4,12 +4,12 @@ After=network-online.target
 Wants=network-online.target
 
 [Service]
-ExecStart=/home/path/to/bin/python /home/path/to/handler.py
-WorkingDirectory=/home/path/to/projectfolder
+ExecStart=/opt/astroinky/venvs/astroinky/bin/python3 /opt/astroinky/venvs/astroinky/AstroInky/AstroInky/handler.py
+WorkingDirectory=/opt/astroinky/venvs/astroinky/AstroInky/AstroInky
 StandardOutput=inherit
 StandardError=inherit
 Restart=always
-User=yourusername
+User=astrouser
 Environment=PYTHONUNBUFFERED=1
 
 [Install]

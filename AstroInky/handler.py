@@ -85,7 +85,7 @@ button_d.when_held = lambda: run_script('d_long')
 
 if __name__ == "__main__":
     print("Button launcher active. Short presses switch scripts. Hold About to shutdown.")
-    run_script('a_short')
+    run_script('d_long')
     threading.Thread(target=hourly_refresher, daemon=True).start()
     pause()
 
