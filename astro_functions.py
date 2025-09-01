@@ -141,7 +141,6 @@ def get_location():
           elevation = int(round(gps.data['altitude']))
           break
       latitude = gps.data['latitude']
-      print(latitude)
       # Count how many times we've been in this loop
       i += 1
       # If it's too many, show a message on screen
