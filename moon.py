@@ -14,7 +14,7 @@ now_utc = datetime.utcnow()
 now_local = datetime.now()
 
 # Location
-latitude, longitude, elevation, tztext, timezone = astro_functions.get_location(display_width)
+latitude, longitude, elevation, tztext, timezone = astro_functions.get_location()
 
 #endregion
 #region EMPHEM
@@ -54,7 +54,7 @@ def get_precise_moon_phase(observer):
         return "Unknown Phase"
     
 #MOON IMAGE
-moon_img_path = astro_functions.config['path']['astro_path'] + "/venvs/astroinky/AstroInky/AstroInky/phases"
+moon_img_path = astro_functions.config['path']['astro_path'] + "/AstroInky/phases"
 def get_moon_phase_img(phase):
     match phase.lower():
         case "new moon":
