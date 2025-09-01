@@ -3,18 +3,20 @@
 Install rpi os 64-bit lite and boot your pi
 
 ```
-sudo-rpi-update
+sudo rpi-update
 sudo apt update
 sudo apt upgrade
 sudo apt autoremove -y
 sudo raspi-config nonint do_i2c 0
 sudo raspi-config nonint do_spi 0
-sudo reboot
 ```
 
 add
 dtoverlay=spi0-0cs
 to /boot/firmware/config.txt
+```
+sudo reboot
+```
 
 Add some packages
 ```
