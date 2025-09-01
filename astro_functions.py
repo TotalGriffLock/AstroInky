@@ -153,6 +153,7 @@ def get_location():
         draw.text((top_center, 100), message_top, astro_constants.RED, font=astro_constants.font)
         # Display
         astro_display(base_img, inky_display)
+      gps.update()
       time.sleep(1)
   else:
     latitude = float(config['location']['latitude'])
