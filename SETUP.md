@@ -55,6 +55,7 @@ Set up some system bits, as root:
 ```
 mv ~astrouser/AstroInky/supporting_files/AstroInky.service /etc/systemd/system/
 mv ~astrouser/AstroInky/supporting_files/astrouser /etc/sudoers.d/
+chown root:root /etc/sudoers.d/astrouser
 systemctl daemon-reload
 systemctl enable --now AstroInky
 ```
