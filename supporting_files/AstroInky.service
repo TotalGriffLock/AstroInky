@@ -4,8 +4,8 @@ After=network-online.target
 Wants=network-online.target
 
 [Service]
-ExecStart=/opt/astroinky/venvs/astroinky/bin/python3 /opt/astroinky/venvs/astroinky/AstroInky/AstroInky/handler.py
-WorkingDirectory=/opt/astroinky/venvs/astroinky/AstroInky/AstroInky
+ExecStart=/opt/astroinky/bin/python3 /opt/astroinky/AstroInky/handler.py
+WorkingDirectory=/opt/astroinky/AstroInky
 StandardOutput=inherit
 StandardError=inherit
 Restart=always
