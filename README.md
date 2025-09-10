@@ -13,6 +13,8 @@ This project was forked from the great starting point (with all the difficult ma
 - Displays **visible stars and planets** (updates on refresh)
 - Renders an accurate visual representation of the **solar system** with the planets in their approximate current positions
 - Shows an **"About"** page with a personal message
+- Supports the Waveshare UPS HAT to make AstroInky portable
+- Supports the Pimoroni GPS breakout to allow AstroInky to set itself up automatically
 
 ### Long Button Press Functions
 
