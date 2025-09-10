@@ -32,6 +32,8 @@ This project was forked from the great starting point (with all the difficult ma
 - Raspberry Pi (any model with GPIO support)
 - [Inky Impression (7-color, 5.7")](https://shop.pimoroni.com/products/inky-impression-5-7)
 - SD card, power supply, and network access for the Pi
+- Optionally, the Waveshare UPS HAT
+- Optionally, the Pimoroni GPS breakout
 
 ---
 
@@ -59,6 +61,7 @@ Long-pressing the **A** button (which, unintuitively, is on the right side) will
 ## ⚙️ Customising
 
 - **Location, NASA API, Custom Messages** are all set in config.ini
+- Hardware support is also set in config.ini
 ---
 
 ## 🛠️ To Do
