@@ -19,6 +19,6 @@ elevation: 0
 astro_path: /opt/astroinky
 
 [picture]
-nasa_api_key: d98zhCMXUYIZa0zpuHyMX1ftnepPDYa8qejj3Z9j
+nasa_api_key: xz
 nasa_api_url: https://api.nasa.gov/planetary/apod
 pic_save_path: /opt/astroinky/apod_picture.jpg
