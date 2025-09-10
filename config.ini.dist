@@ -7,10 +7,10 @@ show_wifi: y
 show_ip: y
 
 [global]
-use_battery: y
+use_battery: n
 
 [location]
-use_gps: y
+use_gps: n
 latitude: 0.00
 longitude: 0.00
 elevation: 0
