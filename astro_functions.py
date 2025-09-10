@@ -143,8 +143,9 @@ def get_location():
       latitude = gps.data['latitude']
       # Count how many times we've been in this loop
       i += 1
+      print (i)
       # If it's too many, show a message on screen
-      if i == 10:
+      if i == 6: # 1 minute
         # Initialise display
         inky_display, base_img, display_height, display_width, draw = init_display()
         align_center = display_width // 2
@@ -153,12 +154,40 @@ def get_location():
         draw.text((top_center, 100), message_top, astro_constants.RED, font=astro_constants.font)
         # Display
         astro_display(base_img, inky_display)
-      gps.update()
-      time.sleep(1)
+      # If it's waaaaaay too many, give up and revert to config.ini
+      if i == 90: # 15 minutes
+        # Initialise display
+        inky_display, base_img, display_height, display_width, draw = init_display()
+        align_center = display_width // 2
+        message_top = "GPS cannot locate us, use static config"
+        top_center = align_center - (draw.textlength(message_top, font=astro_constants.font) / 2)
+        draw.text((top_center, 100), message_top, astro_constants.RED, font=astro_constants.font)
+        # Display
+        astro_display(base_img, inky_display)
+        # Quit out of this loop
+        break
+      result = gps.update()
+      if result:
+        print("""
+        T: {timestamp}
+        N: {latitude}
+        E: {longitude}
+        Alt: {altitude}
+        Sats: {num_sats}
+        Qual: {gps_qual}
+        Speed: {speed_over_ground}
+        Fix Type: {mode_fix_type}
+        PDOP: {pdop}
+        VDOP: {vdop}
+        HDOP: {hdop}
+        """.format(**gps.data))
+      time.sleep(10)
   else:
     latitude = float(config['location']['latitude'])
     longitude = float(config['location']['longitude'])
     elevation = float(config['location']['elevation'])
+
+  gps = None
 
   tztext = timezone_at(lng=longitude,lat=latitude)
   timezone = ZoneInfo(tztext)
