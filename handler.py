@@ -6,9 +6,30 @@ import signal
 import threading
 import time
 import sys
+import configparser
+
+# get config
+config = configparser.ConfigParser()
+config.read('config.ini')
+
+# do we need to worry about a battery?
+yes_words = ('y', 'Y','yes','Yes','YES',1,'true','True',True)
+if config['global']['use_battery'] in yes_words:
+  import ina219
+  # Create an INA219 instance.
+  ups_hat = ina219.ina219(addr=0x43)
+  bus_voltage = ups_hat.getBusVoltage_V()             # voltage on V- (load side)
+  current = ups_hat.getCurrent_mA()                   # current in mA
+  power = ups_hat.getPower_W()                        # power in W
+  p = (bus_voltage - 3)/1.2*100
+  if(p > 100):p = 100
+  if(p < 0):p = 0
+  power_source = "mains"
+  if(current < 0):
+    power_source = "battery"
 
 # default startup script
-last_script_key = 'a_short'  
+last_script_key = 'a_short'
 
 # Define buttons with long press detection
 button_a = Button(5, hold_time=2)
@@ -48,17 +69,25 @@ def run_script(script_key):
     print(f"Starting {scripts[script_key]}")
     current_process = subprocess.Popen([sys.executable, scripts[script_key]])
 
-def shutdown_system():
-    print("Long press on A: Preparing to shut down...")
-    stop_current_script()
-    
-    print(f"Running shutdown script: {scripts['a_long']}")
+def shutdown_system(lowpower=False):
+    if (lowpower == True):
+      print("Battery is too low: Preparing to shut down...")
+      stop_current_script()
+      script = 'shutdown-lowpower.py'
+
+    else:
+      print("Long press on A: Preparing to shut down...")
+      stop_current_script()
+      script = scripts['a_long']
+
+    print(f"Running shutdown script: {script}")
+
     try:
         # Run shutdown.py and wait for it to complete
-        subprocess.run([sys.executable, scripts['a_long']], check=True)
+        subprocess.run([sys.executable, script], check=True)
     except subprocess.CalledProcessError as e:
         print(f"Shutdown script failed: {e}")
-    
+
     print("Shutdown script finished. Shutting down system now...")
     subprocess.call("sudo shutdown -h now", shell=True)
 
@@ -87,5 +116,28 @@ if __name__ == "__main__":
     print("Button launcher active. Short presses switch scripts. Hold About to shutdown.")
     run_script('d_long')
     threading.Thread(target=hourly_refresher, daemon=True).start()
-    pause()
-
+    if config['global']['use_battery'] in yes_words:
+      # Check battery status
+      while True:
+        current = ups_hat.getCurrent_mA()
+        bus_voltage = ups_hat.getBusVoltage_V()
+        p = (bus_voltage - 3)/1.2*100
+        if (power_source == "mains" and current < 0):
+          # We were on mains power when we started but current is now negative
+          # Something has changed so refresh the screen
+          print("We have changed to battery power, reloading script")
+          run_script(last_script_key)
+          power_source = "battery"
+        elif (power_source == "battery" and current > 0):
+          print("We have changed to mains power, reloading script")
+          # We were on battery power but now current is positive
+          # Something has changed so refresh the screen
+          run_script(last_script_key)
+          power_source = "mains"
+        if (int(p) < 5):
+          print("Power is too low, shutting down")
+          # Battery percentage is below 5%
+          shutdown_system(lowpower=True)
+        time.sleep(10)
+    else:
+      pause()

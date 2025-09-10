@@ -13,6 +13,8 @@ from inky.auto import auto
 config = configparser.ConfigParser()
 config.read('config.ini')
 
+yes_words = ('y', 'Y','yes','Yes','YES',1,'true','True',True)
+
 # Init display
 def init_display():
   inky_display = auto()
@@ -32,6 +34,29 @@ def init_display():
   base_img.paste(nav_star, (xB, nav_y))
   base_img.paste(nav_solar, (xC, nav_y))
   base_img.paste(nav_about, (xD, nav_y))
+  if config['global']['use_battery'] in yes_words:
+    import ina219
+    # Create an INA219 instance.
+    ups_hat = ina219.ina219(addr=0x43)
+    bus_voltage = ups_hat.getBusVoltage_V()             # voltage on V- (load side)
+    current = ups_hat.getCurrent_mA()                   # current in mA
+    power = ups_hat.getPower_W()                        # power in W
+    p = (bus_voltage - 3)/1.2*100
+    if(p > 100):p = 100
+    if(p < 0):p = 0
+    # Work out which icon to display
+    xBat = display_width - astro_constants.icon_size_sm[0] - 4
+    if (current > 0):
+      battery = load_svg_icon("icons/battery-charging.svg", size=astro_constants.icon_size_sm)
+    elif (int(p) > 75):
+      battery = load_svg_icon("icons/battery-full.svg", size=astro_constants.icon_size_sm)
+    elif (int(p) > 25):
+      battery = load_svg_icon("icons/battery-half.svg", size=astro_constants.icon_size_sm)
+    elif (int(p) > 10):
+      battery = load_svg_icon("icons/battery-low.svg", size=astro_constants.icon_size_sm)
+    else:
+      battery = load_svg_icon("icons/battery.svg", size=astro_constants.icon_size_sm)
+    base_img.paste(battery, (xBat, nav_y))
   return (inky_display, base_img, display_height, display_width, draw)
 
 
@@ -110,8 +135,6 @@ def astro_display(base_img, inky_display):
 # Handle location info
 def get_location():
   # To GPS or not to GPS
-  yes_words = ('y', 'Y','yes','Yes','YES',1,'true','True',True)
-
   if config['location']['use_gps'] in yes_words:
     from pa1010d import PA1010D
     gps = PA1010D()
@@ -143,7 +166,6 @@ def get_location():
       latitude = gps.data['latitude']
       # Count how many times we've been in this loop
       i += 1
-      print (i)
       # If it's too many, show a message on screen
       if i == 6: # 1 minute
         # Initialise display
@@ -167,20 +189,6 @@ def get_location():
         # Quit out of this loop
         break
       result = gps.update()
-      if result:
-        print("""
-        T: {timestamp}
-        N: {latitude}
-        E: {longitude}
-        Alt: {altitude}
-        Sats: {num_sats}
-        Qual: {gps_qual}
-        Speed: {speed_over_ground}
-        Fix Type: {mode_fix_type}
-        PDOP: {pdop}
-        VDOP: {vdop}
-        HDOP: {hdop}
-        """.format(**gps.data))
       time.sleep(10)
   else:
     latitude = float(config['location']['latitude'])

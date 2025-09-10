@@ -3,6 +3,11 @@ image: icons/heart.svg
 top_msg: You should edit config.ini
 mid_msg: and change the text of these
 low_msg: to whatever you would like! 
+show_wifi: y
+show_ip: y
+
+[global]
+use_battery: y
 
 [location]
 use_gps: y
@@ -14,6 +19,6 @@ elevation: 0
 astro_path: /opt/astroinky
 
 [picture]
-nasa_api_key: xyzy
+nasa_api_key: d98zhCMXUYIZa0zpuHyMX1ftnepPDYa8qejj3Z9j
 nasa_api_url: https://api.nasa.gov/planetary/apod
 pic_save_path: /opt/astroinky/apod_picture.jpg

@@ -7,7 +7,7 @@ inky_display, base_img, display_height, display_width, draw = astro_functions.in
 # Calculate horizontal spacing
 column_width = display_width // 4  # 4 columns
 
-button_labels = [('D','Moon Info','Instructions'),('C','Visible\nBodies','A Random\n    Moon'),('B','Visual\n Solar\nSystem','Random\n  NASA\n  Image'),('A','About','Shutdown')]
+button_labels = [('D','Moon Info','Instructions'),('C','Visible\nBodies','A Random\n    Moon'),('B',' Visual\n  Solar\nSystem','Random\n  NASA\n  Image'),('A','About','Shutdown')]
 
 for i, (button, primary, long_press) in enumerate(button_labels):
     column_x = i * column_width

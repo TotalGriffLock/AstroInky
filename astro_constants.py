@@ -75,6 +75,7 @@ color_palette_img.putpalette(color_palette)
 font = ImageFont.truetype("fonts/Merriweather-VariableFont_opsz,wdth,wght.ttf", 18)
 font_path = "fonts/Merriweather-VariableFont_opsz,wdth,wght.ttf"
 font_large = ImageFont.truetype("fonts/Merriweather-VariableFont_opsz,wdth,wght.ttf", 24)
+font_small = ImageFont.truetype("fonts/Merriweather-VariableFont_opsz,wdth,wght.ttf", 12)
 ascent, descent = font.getmetrics()                                                 #gets the height (ascent and descent) of the font
 font_height = ascent + descent
 line_spacing = font_height * 2
