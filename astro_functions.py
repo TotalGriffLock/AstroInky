@@ -4,6 +4,7 @@ import io
 import re
 import configparser
 import time
+import datetime
 
 from zoneinfo import ZoneInfo
 from timezonefinder import timezone_at
@@ -57,6 +58,14 @@ def init_display():
     else:
       battery = load_svg_icon("icons/battery.svg", size=astro_constants.icon_size_sm)
     base_img.paste(battery, (xBat, nav_y))
+  if config['global']['show_timestamp'] in yes_words:
+    message_timestamp = "Updated: " + datetime.datetime.now().strftime("%H:%M:%S %Z")
+    ascent, descent = astro_constants.font_small.getmetrics()
+    font_height = ascent + descent
+    timestamp_x = display_width - draw.textlength(message_timestamp, font=astro_constants.font_small)
+    timestamp_y = display_height - font_height
+    draw.text((timestamp_x, timestamp_y), message_timestamp, astro_constants.BLUE, font=astro_constants.font_small)
+
   return (inky_display, base_img, display_height, display_width, draw)
 
 
