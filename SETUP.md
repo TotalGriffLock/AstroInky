@@ -3,10 +3,11 @@
 Install rpi os 64-bit lite and boot your pi
 
 ```
-sudo rpi-update
 sudo apt update
+sudo apt remove -y librpicam-app1
 sudo apt upgrade -y
 sudo apt autoremove -y
+sudo rpi-update
 sudo raspi-config nonint do_i2c 0
 sudo raspi-config nonint do_spi 0
 ```
@@ -14,6 +15,8 @@ sudo raspi-config nonint do_spi 0
 add
 dtoverlay=spi0-0cs
 to /boot/firmware/config.txt
+If you want to disable bluetooth in a vague attempt to minimise power usage as well you can add
+dtoverlay=disable-bt
 ```
 sudo reboot
 ```
